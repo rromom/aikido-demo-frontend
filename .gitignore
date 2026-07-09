@@ -1,0 +1,5 @@
+node_modules/
+dist/
+
+# NOTE: intentionally NOT ignoring src/config/supabase.js — carries a
+# hardcoded secret on purpose for this vulnerable-by-design demo repo.
