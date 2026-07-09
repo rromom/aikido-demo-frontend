@@ -3,7 +3,11 @@
     <router-link to="/" class="brand">Vulnerable Marketplace</router-link>
     <nav>
       <router-link to="/">Inicio</router-link>
-      <router-link to="/admin">Admin</router-link>
+      <!-- Solo se oculta el link para clientes logueados; el endpoint sigue
+           sin ningún guard real (broken-access-control intencional) — ver
+           VULNERABILITIES.md. Escribiendo /admin en la URL, o llamando la
+           API directo, cualquiera entra igual. -->
+      <router-link v-if="!currentUser || currentUser.role === 'admin'" to="/admin">Admin</router-link>
       <router-link v-if="currentUser" to="/pedidos">Mis pedidos</router-link>
 
       <div class="session" v-if="currentUser">
