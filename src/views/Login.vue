@@ -31,6 +31,6 @@ async function login() {
   // localStorage, readable by any script (XSS-accessible, no httpOnly cookie).
   setSession(data.user, data.token)
   console.log('[DEBUG] login response:', data) // VULN: sensitive-data-logging — token logged to console
-  router.push('/')
+  router.push(data.user.role === 'admin' ? '/admin' : '/pedidos')
 }
 </script>

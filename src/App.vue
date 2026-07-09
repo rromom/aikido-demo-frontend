@@ -4,6 +4,7 @@
     <nav>
       <router-link to="/">Inicio</router-link>
       <router-link to="/admin">Admin</router-link>
+      <router-link v-if="currentUser" to="/pedidos">Mis pedidos</router-link>
 
       <div class="session" v-if="currentUser">
         <span class="badge" :class="currentUser.role">{{ currentUser.role }}</span>
