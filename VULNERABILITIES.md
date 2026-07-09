@@ -12,7 +12,7 @@ Contraparte backend: [aikido-backend-demo/VULNERABILITIES.md](https://github.com
 | 6 | Token logueado en consola del navegador | [src/views/Login.vue:29](src/views/Login.vue#L29) | A09:2021 Security Logging & Monitoring Failures | SAST |
 | 7 | Panel admin del frontend sin guard de rol/sesión | [src/views/Admin.vue:4](src/views/Admin.vue#L4) | A01:2021 Broken Access Control | SAST / DAST |
 | 8 | Permisos de workflow excesivos (`permissions: write-all`) | [.github/workflows/deploy.yml](.github/workflows/deploy.yml#L10) | A05:2021 Security Misconfiguration | CI/CD / IaC |
-| 9 | Token de despliegue de terceros hardcodeado en texto plano en el workflow | [.github/workflows/deploy.yml](.github/workflows/deploy.yml#L33) | A02:2021 Cryptographic Failures (CWE-798) | Secrets / CI/CD |
+| 9 | Token de despliegue de terceros hardcodeado en texto plano en el workflow (no usado por el deploy real, que usa `secrets.GITHUB_TOKEN`) | [.github/workflows/deploy.yml:13](.github/workflows/deploy.yml#L13) | A02:2021 Cryptographic Failures (CWE-798) | Secrets / CI/CD |
 
 ## Cómo re-generar esta lista
 ```bash

@@ -10,6 +10,15 @@ on:
 # needs. A compromised action/dependency in this run inherits all of it.
 permissions: write-all
 
+# VULN: hardcoded-secret-in-workflow — a third-party deploy token is pasted
+# here in plaintext instead of using a repo secret (`${{ secrets.* }}`).
+# Anyone with read access to this repo (or its Actions logs) gets a live
+# credential. Left unused by the actual deploy step below on purpose, so the
+# pipeline still runs green while the secret sits in the committed YAML for
+# Aikido's scanner to find.
+env:
+  LEGACY_DEPLOY_TOKEN: "ghp_DEMOFAKEPAT1234567890abcdefGHIJKL"
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -29,12 +38,8 @@ jobs:
       - name: SPA fallback for GitHub Pages
         run: cp dist/index.html dist/404.html
 
-      # VULN: hardcoded-secret-in-workflow — a personal access token is pasted
-      # here in plaintext instead of using `${{ secrets.GH_PAGES_TOKEN }}`.
-      # Anyone with read access to this repo (or its Actions logs) gets a
-      # third-party token with far more privilege than "push to gh-pages".
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          personal_token: "ghp_DEMOFAKEPAT1234567890abcdefGHIJKL"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
