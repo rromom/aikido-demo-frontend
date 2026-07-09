@@ -1,18 +1,21 @@
 <template>
   <div>
-    <h1>Marketplace (demo vulnerable)</h1>
-    <input v-model="q" @keyup.enter="search" placeholder="Buscar productos..." />
-    <button @click="search">Buscar</button>
+    <h1>Marketplace</h1>
+    <div class="search-bar">
+      <input v-model="q" @keyup.enter="search" placeholder="Buscar productos..." />
+      <button class="btn" @click="search">Buscar</button>
+    </div>
 
     <!-- VULN: xss-reflected — search term rendered with v-html, no escaping -->
-    <p v-html="resultsLabel"></p>
+    <p class="muted" v-html="resultsLabel"></p>
 
-    <ul>
-      <li v-for="p in products" :key="p.id">
-        <router-link :to="`/products/${p.id}`">{{ p.title }}</router-link>
-        — ${{ p.price }} ({{ p.stock }} en stock)
-      </li>
-    </ul>
+    <div class="product-grid">
+      <router-link v-for="p in products" :key="p.id" :to="`/products/${p.id}`" class="product-card">
+        <span class="title">{{ p.title }}</span>
+        <span class="price">${{ p.price }}</span>
+        <span class="stock">{{ p.stock }} en stock</span>
+      </router-link>
+    </div>
   </div>
 </template>
 

@@ -1,19 +1,20 @@
 <template>
   <div>
+    <router-link to="/" class="muted">&larr; Volver</router-link>
     <h2>{{ product.title }}</h2>
-    <p>{{ product.description }}</p>
-    <p>Precio: ${{ product.price }}</p>
+    <p class="muted">{{ product.description }}</p>
+    <p style="font-size: 1.2rem; font-weight: 700; color: var(--color-primary)">${{ product.price }}</p>
 
-    <h3>Comentarios</h3>
-    <ul>
-      <li v-for="c in comments" :key="c.id">
-        <!-- VULN: xss-stored — comment body rendered with v-html, no sanitization -->
-        <div v-html="c.body"></div>
-      </li>
-    </ul>
+    <h3 class="section-title">Comentarios</h3>
+    <div v-for="c in comments" :key="c.id" class="comment">
+      <!-- VULN: xss-stored — comment body rendered with v-html, no sanitization -->
+      <div v-html="c.body"></div>
+    </div>
 
-    <textarea v-model="newComment" placeholder="Escribe un comentario..."></textarea>
-    <button @click="postComment">Comentar</button>
+    <div class="card" style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px">
+      <textarea v-model="newComment" placeholder="Escribe un comentario..." rows="3"></textarea>
+      <button class="btn" style="align-self: flex-start" @click="postComment">Comentar</button>
+    </div>
   </div>
 </template>
 

@@ -1,9 +1,35 @@
 <template>
-  <nav>
-    <router-link to="/">Inicio</router-link> |
-    <router-link to="/login">Login</router-link> |
-    <router-link to="/register">Registro</router-link> |
-    <router-link to="/admin">Admin</router-link>
-  </nav>
-  <router-view />
+  <header class="navbar">
+    <router-link to="/" class="brand">Vulnerable Marketplace</router-link>
+    <nav>
+      <router-link to="/">Inicio</router-link>
+      <router-link to="/admin">Admin</router-link>
+
+      <div class="session" v-if="currentUser">
+        <span class="badge" :class="currentUser.role">{{ currentUser.role }}</span>
+        <span class="muted">{{ currentUser.email }}</span>
+        <button class="btn secondary" @click="handleLogout">Cerrar sesión</button>
+      </div>
+      <div class="session" v-else>
+        <router-link to="/login">Login</router-link>
+        <router-link to="/register">Registro</router-link>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <router-view />
+  </main>
 </template>
+
+<script setup>
+import { useRouter } from 'vue-router'
+import { currentUser, clearSession } from './store/auth'
+
+const router = useRouter()
+
+function handleLogout() {
+  clearSession()
+  router.push('/')
+}
+</script>
